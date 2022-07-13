@@ -4,22 +4,17 @@
 Java lambdas is the new feature that come along in java 8.
 You can think of them as a new cleaner but limited way to implement anonimous interfaces.
  
-For example:
+For example, We have an interface that has a single abstract method `run()`:
 ```java
-
-    public interface MyLamdaFunction {
+    public interface MyInterface {
         void run();
     }
-
 ```
 
-We have an interface that has a single abstract method `run()`.
-
-Lets implement this method anonimously and try to use it:
+Lets implement this method anonimously and try to call method `run`:
 
 ```java
-
-    MyLambdaFunction anonimous = new MyLambdaFunction() {
+    MyInterface anonimous = new MyInterface() {
         @Override
         void run() {
             System.out.println("Hello");
@@ -27,64 +22,95 @@ Lets implement this method anonimously and try to use it:
     };
 
     anonimous.run();
-
 ```
 
 Lets rewrite this implementation in lambda way:
 
 ``` java
-
-    MyLambdaFunction lambda = () -> System.out.println("Hello");
+    MyInterface lambda = () -> System.out.println("Hello");
 
     lambda.run();
-
 ```
 
 As you can see, the code looks more minimalistic and simple with lambda, and the usage of the interface doesn't change.
 
 The main limitations of using lambdas are:
 - Only interface with a single method can be used as a lambda
-- You cannot create global variables, methods and inner classes in lambdas as you do in anonimous implementation
+``` java
+    // Can be used as lambda
+    public interface MyInterface2 {
+        void run();
+    }
+
+    // Cannot by used as lambda
+    public interface MyInterface1 {
+        void run();
+        void stop();
+    }
+```
+- You cannot create global variables, methods and inner classes in lambdas as you do in anonimous implementation.
+``` java
+    // Cannot be implemented using lambda
+    MyInterface anonimous = new MyInterface() {
+        
+        private final Logger LOG = LoggerFactory.getLogger("My Interface");
+
+        @Override
+        void run() {
+            logMessage(message)
+        }
+
+        private void logMessage(String message) {
+            LOG.info(message)
+        }
+    };
+```
 
 ## Lambda Parameters
 You can create lamdas with one, many or without parameters:
 
 Not parameters example:
 ```java
-
 () -> {
-    System.out.println("Hello from lamda");
+    System.out.println("Hello from lambda");
 }
-
 ```
 
 One parameter example:
 ```java
-
 (param) -> {
-    System.out.println("Hello from lamda. The param is : " + param);
+    System.out.println("Hello from lambda. The param is : " + param);
 }
-
 ```
 
 Three parameter example:
 ```java
-
 (param1, param2, param3) -> {
-    System.out.printf("Hello from lamda. The params are [%s, %s, %s] ", param1, param2, param3);
+    System.out.printf("Hello from lambda. The params are [%s, %s, %s] ", param1, param2, param3);
 }
-
 ```
 
-When you have one parameter you can omit adding brackets `()` so as the curly brackets `{}` could be omitted too when the implementation takes only one line of code.
+When you have one parameter you can omit adding brackets `()`.
 
 For example:
 ```java
-
-    number -> number + 1;
-
+    // factorial
+    number -> {
+        int result = 1;
+        for (int i = 1; i < number; i++) {
+            result *= i;
+        }
+        return result;
+    };
 ```
-This lambda returns the number incremented by one. `{}` and `()` brackets can be omitted.
+
+Also, curly brackets `{}` can be omitted too when the implementation takes only one line of code.
+
+For example:
+```java
+    // add two numbers
+    (n1, n2) -> n1 + n2;
+```
 
 ## Outer variables inside the lambda
 
@@ -95,7 +121,7 @@ Java supports following types of variables:
 
 All of them can be used inside of a lambda.
 
-Lets define an interface MathOperation that takes two integers and returns the result of some mathematic operation.
+Lets define an interface `MathOperation` that takes two integers and returns the result of some mathematic operation.
 ```java
 
 public interface MathOperation {
@@ -108,17 +134,14 @@ And here are the examples of defining the lambda that uses different types of va
 
 Local variable:
 ```java
-
     int num1 = 2;
     int num2 = 3;
 
     MathOperation multiplication = () -> n1 * n2;
-
 ```
 
 Instance variable:
 ```java
-
 public class Mathematics {
 
     int magicNumber = 2;
@@ -129,12 +152,10 @@ public class Mathematics {
     }
 
 }
-
 ```
 
 Static variable:
 ```java
-
     public class Mathematics {
 
         static int constantNumber = 2;
@@ -145,9 +166,8 @@ Static variable:
         }
 
     }
-
 ```
 
-There is a limitation regarded to the outer variables inside the lambda. The variables should be final. This is required to omit situations when reference of the variables changes and the lambda returns different results. The lambda must be stateless.
+There is a limitation regarded to the outer variables inside the lambda. The variables should be final. This is required to omit situations when reference of the variables changes that provoke lambda to returns different results. The lambda must be stateless. The compiler will give you the error message if the way you are using variables in lambda is incorrect.
 
 ## Methods as lambdas
