@@ -2,7 +2,7 @@
 
 ## What is the lambda?
 Java lambdas is the new feature that come along in java 8.
-You can think of them as a new cleaner, but limited way to implement anonimous interfaces.
+You can think of them as a new, cleaner, but limited way to implement anonymous interfaces.
  
 For example, We have an interface that has a single abstract method `run()`:
 ```java
@@ -11,17 +11,17 @@ For example, We have an interface that has a single abstract method `run()`:
     }
 ```
 
-Lets implement this method anonimously and try to call method `run`:
+Lets implement this method anonymously and try to call method `run`:
 
 ```java
-    MyInterface anonimous = new MyInterface() {
+    MyInterface anonymous = new MyInterface() {
         @Override
         void run() {
             System.out.println("Hello");
         }
     };
 
-    anonimous.run();
+    anonymous.run();
 ```
 
 Lets rewrite this implementation in lambda way:
@@ -58,10 +58,10 @@ For example:
     }
 ```
 
-As a downside to lambdas, you cannot create global variables, methods and inner classes in lambdas as you do in the anonimous implementation.
+As a downside to lambdas, you cannot create global variables, methods and inner classes in lambdas as you do in the anonymous implementation.
 ``` java
     // Cannot be implemented using lambda
-    MyInterface anonimous = new MyInterface() {
+    MyInterface anonymous = new MyInterface() {
         
         private final Logger LOG = LoggerFactory.getLogger("My Interface");
 
