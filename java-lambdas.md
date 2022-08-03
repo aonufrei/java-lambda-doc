@@ -1,17 +1,17 @@
-# Java Lambdas Expressions
+# Java Lambda Expressions
 
-## What is the lambda?
-Java lambdas is the new feature that come along in java 8.
-You can think of them as a new, cleaner, but limited way to implement anonymous interfaces.
+## What is Lambda?
+Java lambda is a new feature that comes along in Java 8.
+You can think of it as a newer, cleaner, but limited way to implement anonymous interfaces.
  
-For example, We have an interface that has a single abstract method `run()`:
+For example, we have an interface that has a single abstract method `run()`:
 ```java
     public interface MyInterface {
         void run();
     }
 ```
 
-Lets implement this method anonymously and try to call method `run`:
+Lets implement this interface anonymously and call it:
 
 ```java
     MyInterface anonymous = new MyInterface() {
@@ -34,7 +34,7 @@ Lets rewrite this implementation in lambda way:
 
 As you can see, the code looks more minimalistic and simple with lambda, and the usage of the interface doesn't change.
 
-The interfaces, that can be implemented as lambda are named **Functional Interfaces**. Those are interfaces that has only one abstract method or/and has `@FunctionalInterface` annotation.
+The interfaces that can be implemented as lambda are named **Functional Interfaces**. Those are interfaces that have only one abstract method or/and `@FunctionalInterface` annotation.
 
 For example:
 ``` java
@@ -58,7 +58,7 @@ For example:
     }
 ```
 
-As a downside to lambdas, you cannot create global variables, methods and inner classes in lambdas as you do in the anonymous implementation.
+As a downside to lambda, you cannot declare global variables, methods, and inner classes inside.
 ``` java
     // Cannot be implemented using lambda
     MyInterface anonymous = new MyInterface() {
@@ -77,9 +77,9 @@ As a downside to lambdas, you cannot create global variables, methods and inner 
 ```
 
 ## Lambda Parameters
-Lamdas can contain none, one, or many parameters:
+Lamdas can contain none, one or many parameters:
 
-Without parameters example:
+No parameters example:
 ```java
 () -> {
     System.out.println("Hello from lambda");
@@ -114,7 +114,7 @@ For example:
     };
 ```
 
-Also, curly brackets `{}` can be omitted when the implementation takes only one line of code.
+Curly brackets `{}` can be omitted when the implementation takes only one line of code.
 
 For example:
 ```java
@@ -122,14 +122,14 @@ For example:
     (n1, n2) -> n1 + n2;
 ```
 
-## Outer variables inside the lambda
+## Outer variables inside lambda
 
-Java supports following types of variables:
+Java supports the following types of variables:
 - Local variables
 - Instance variables
 - Static variables
 
-All of them can be used inside the lambda.
+All of them can be used inside lambda.
 
 Lets define an interface `MathOperation` that takes two integers and returns the result of some mathematic operation.
 ```java
@@ -140,7 +140,7 @@ public interface MathOperation {
 
 ```
 
-And here are some examples of defining the lambda that uses different types of variables:
+And here are some examples of defining lambda that uses different types of variables:
 
 Local variable:
 ```java
@@ -178,7 +178,7 @@ Static variable:
     }
 ```
 
-There is a limitation regarded to the outer variables inside the lambda. The variables must be final. This is required to omit situations when reference of the variables changes and provokes lambda to return different results.
+There is a limitation regarding the outer variables inside lambda. The variables must be final. This is required in order to omit situations when the reference of the variables changes and provokes lambda to return different results.
 
 For example: 
 ```java
@@ -189,10 +189,10 @@ For example:
 
     n1 = 13;
 ```
-This code will produce compilation error as `n1` is changed after lambda declaration. The lambda must be stateless. The compiler will show you the error message, if the way you are using variables in lambda is incorrect.
+This code will produce a compilation error as `n1` is changed after lambda declaration. Lambda must be stateless. The compiler will show you the error message, if the way you are using variables in lambda is incorrect.
 
 ## Predefined Functional Interfaces
-There are a number of predefined interfaces that were introduced to Java 8 and can be used to define lambdas.
+There is a number of predefined interfaces that were introduced to Java 8 and can be used to define lambdas.
 
 They are:
 * Consumer
@@ -200,7 +200,7 @@ They are:
 * Function 
 * Supplier
 
-This interfaces are used very often in modern Java development. For example, all of them are actively used to work with streams:
+These interfaces are very often used in modern Java development. For example, all of them are actively used to work with streams:
 ```java
 
 		Stream.generate(() -> new Random().nextInt(10)) // uses Supplier
@@ -211,10 +211,10 @@ This interfaces are used very often in modern Java development. For example, all
 
 ```
 
-Each of these interfaces are covered in the following sections.
+Each of these interfaces is covered in the following sections.
 ### Consumer 
 
-`Consumer` interface contains single method accept, that accepts passed paramer and performes some operation.
+`Consumer` interface contains a single method that accepts the passed parameter and performs some operations.
 
 ```java
 
@@ -233,7 +233,7 @@ For example:
     printer.accept("Hello world");
 
 ```
-This piece of code creates a consumer that prints text to console and returns nothing.
+This piece of code creates a consumer that prints a text to console and returns nothing.
 
 ### Predicate
 `Predicate` interface has following structure.
@@ -250,7 +250,7 @@ public interface Predicate<T> {
 ```
 It contains the `test` method that accepts the value and returns boolean.
 
-Following example defines predicate that can be used to check if the passed text contains the word "Hello":
+The following example defines a predicate that can be used to check if the passed text contains the word "Hello":
 ```java
 
 Predicate<String> predicate = text -> text.contains("Hello");
@@ -259,7 +259,7 @@ predicate.test("Hello world");
 ```
 
 ### Function
-`Function` interface is used to define a lambda that converts one object into another using method `apply`.
+`Function` interface is used to define lambda that converts one object into another using the method `apply`.
 
 ```java
 
@@ -272,7 +272,7 @@ public interface Function<T, R> {
 
 ```
 
-Following example creates `Function` that parses number from `String` into `Integer`; 
+The following example creates `Function` that parses the number from `String` into `Integer`; 
 ```java
 
 Function<String, Integer> stringToInteger = stringNumber -> Integer.parseInt(stringNumber);
@@ -282,7 +282,7 @@ Integer parsedNumber = stringToInteger.apply("12");
 
 ### Supplier
 
-`Supplier` is used to define lambda that retuns some value.
+`Supplier` is used to define lambda that returns some value.
 
 ```java
 
@@ -295,7 +295,7 @@ public interface Supplier<T> {
 
 ```
 
-Following example creates supplier that retuns `PI` value: 
+The following example creates supplier that retuns `PI` value: 
 ```java
 
 Supplier<Double> piSupplier = () -> Math.PI;
@@ -305,14 +305,14 @@ Double piValue = piSupplier.get();
 
 ### Modifications
 
-`Consumer`, `Predicate`, and `Function` interfaces has some modifications:
+`Consumer`, `Predicate` and `Function` interfaces have some modifications:
 * `BiConsumer`
 * `BiPredicate`
 * `BiFunction`
 * `UnaryOperator`
 * `BinaryOperator` 
 
-`BiConsumer`, `BiPredicate`, and `BiFunction` work the same as like regular `Consumer`, `Predicate`, and `Function`, but accepts two parameters.
+`BiConsumer`, `BiPredicate`, and `BiFunction` work the same as regular `Consumer`, `Predicate` and `Function`, but accept two parameters.
 ```java
 
 @FunctionalInterface
@@ -360,11 +360,11 @@ public interface BinaryOperator<T> extends BiFunction<T,T,T> {
 
 
 
-## Methods as lambdas
-Any java method can be used as a lambda, if it's return type and parameters fits.
-When all that lambda does is calling another method with the parameters passed to the lambda, you can shorter the way you declare that.
+## Methods as Lambdas
+Any java method can be used as lambda if its' return type and parameters fit.
+When all lambda does is calling another method with the parameters passed to lambda, you can shorten the way you declare that.
 
-For example we have the following method:
+For example, we have the following method:
 ```java
 
 void printText(String text, Consumer<String> outputOperation) {
@@ -373,15 +373,15 @@ void printText(String text, Consumer<String> outputOperation) {
 
 ```
 
-Our desire is to print the text to the console. In Java we have `System.out.println` method. It is the `void` method that consumes one paramater, so it fits `accept` method of `Consumer` interface.
+We need to print the text to the console. In Java we have the `System.out.println` method. It is the `void` method that consumes one parameter, so it fits the `accept` method of `Consumer` interface.
 
-So now, we can call this method the following way:
+So now we can call this method the following way:
 
 ```java
     printText("Hello world", System.out::println);
 ```
 
-This method will print the "Hello world" to the console.
+This method will print "Hello world" to the console.
 `System.out::println` plays the role of lambda in this case. The `::` signals the compiler to use the method reference.
 
 You can reference the following types of methods:
@@ -391,7 +391,7 @@ You can reference the following types of methods:
 
 Each of these types of method references are covered in the following sections.
 
-## Static Method references
+## Static Method References
 
 For example, we have the following class:
 
@@ -406,7 +406,7 @@ class RichText {
 
 ```
 
-So know, we can use `printPrettyText` as lambda like so:
+So now we can use `printPrettyText` as lambda:
 
 ```java
 
@@ -414,9 +414,9 @@ So know, we can use `printPrettyText` as lambda like so:
 
 ```
 
-## Instance Method references
+## Instance Method References
 
-Assuming we have a `UserService` that allows us to create users by passing username and password.
+Assuming that we have `UserService` that allows us to create users by passing username and password.
 
 ```java
 
@@ -439,7 +439,7 @@ class UserService {
 
 ```
 
-But, if you want to use `createUser` reference inside the `UserService` class, you can use `this::createUser`.
+But if you want to use the `createUser` reference inside the `UserService` class, you can use `this::createUser`.
 
 For example:
 ```java
@@ -457,9 +457,9 @@ class UserService {
 }
 ```
 
-## Constructor Method references
+## Constructor Method References
 
-Constructor, in general, is just a method, that accepts parameters and return the instance of the class it was created in.
+Constructor, in general, is just a method that accepts parameters and returns the instance of the class it was created in.
 
 For example, we have the following class:
 
@@ -490,4 +490,4 @@ In order to use constructor reference we need to use `::new`:
 ```
 
 ## Conclusion
-Java lambda is a really useful feature. It allows developers to write simple, readable, and minimalistic Java code. It is very hard to imagine modern development in Java without them. That's why it is so important to learn it.
+Java lambda is a really useful feature. It allows the developers to write simple, readable, and minimalistic Java code. This feature is fundamental for the modern Java development, that's why it is so important to learn it.
